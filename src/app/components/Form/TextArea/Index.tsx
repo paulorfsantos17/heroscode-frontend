@@ -4,16 +4,16 @@ import React, {
   forwardRef,
 } from 'react'
 
-interface IInput extends InputHTMLAttributes<HTMLTextAreaElement> {
+interface IInputArea extends InputHTMLAttributes<HTMLTextAreaElement> {
   placeholder: string
   title: string
   className?: string
 }
 
-const TextAreaBasic: ForwardRefRenderFunction<HTMLTextAreaElement, IInput> = (
-  { placeholder, title, className, ...rest },
-  ref,
-) => {
+const TextAreaBasic: ForwardRefRenderFunction<
+  HTMLTextAreaElement,
+  IInputArea
+> = ({ placeholder, title, className, ...rest }, ref) => {
   return (
     <div className={`mb-4 flex flex-col gap-1 text-blue ${className}`}>
       <label className="text-base font-medium">{title}</label>

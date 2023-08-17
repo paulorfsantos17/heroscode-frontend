@@ -27,7 +27,7 @@ export default function InputFile() {
         <input
           onChange={handleChange}
           type="file"
-          className="block h-full w-full cursor-pointer rounded-3xl opacity-0"
+          className="block h-full w-full cursor-pointer rounded-3xl opacity-0  group-hover:border-teal-300"
         />
       )}
     </>

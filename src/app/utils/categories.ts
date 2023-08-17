@@ -2,38 +2,38 @@ const categories = [
   {
     name: 'Acadêmico',
     icons: '/academico.png',
-    route: 'academic'
+    route: 'academic',
   },
   {
     name: 'Animais',
     icons: '/animais.png',
-    route: 'animals'
+    route: 'animals',
   },
   {
     name: 'Cultural',
     icons: '/cultural.png',
-    route: 'cultural'
+    route: 'cultural',
   },
   {
     name: 'Ferias',
     icons: '/feiras.png',
-    route: 'fairs'
+    route: 'fairs',
   },
   {
     name: 'Festivais',
     icons: '/festival.png',
-    route: 'festival'
+    route: 'festival',
   },
   {
     name: 'Gastronomicos',
     icons: '/academico.png',
-    route: 'gastronomic'
+    route: 'gastronomic',
   },
   {
     name: 'Musical',
     icons: '/musical.png',
-    route: 'musical'
+    route: 'musical',
   },
 ]
 
-export {categories}
+export { categories }

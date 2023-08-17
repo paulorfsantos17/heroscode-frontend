@@ -1,5 +1,5 @@
-import React from "react";
-import { ISvg } from "../interfaces/ISvg";
+import React from 'react'
+import { ISvg } from '../interfaces/ISvg'
 
 export default function MapPin({ className }: ISvg) {
   return (
@@ -9,7 +9,8 @@ export default function MapPin({ className }: ISvg) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={className}>
+      className={className}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -21,5 +22,5 @@ export default function MapPin({ className }: ISvg) {
         d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
       />
     </svg>
-  );
+  )
 }

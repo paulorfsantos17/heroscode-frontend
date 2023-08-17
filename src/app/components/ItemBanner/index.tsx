@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 interface IItemBaner {
-  title: string;
-  icon: React.ReactNode;
+  title: string
+  icon: React.ReactNode
 }
 
 export default function ItemBanner({ title, icon }: IItemBaner) {
@@ -10,5 +10,5 @@ export default function ItemBanner({ title, icon }: IItemBaner) {
       {icon}
       <p>{title}</p>
     </div>
-  );
+  )
 }

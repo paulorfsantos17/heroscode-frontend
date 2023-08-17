@@ -106,7 +106,7 @@ export default function CreateEvent() {
             <p className="mb-4 text-xs font-light text-neutral-500">
               Insira o Mapa do Evento indicando os setores
             </p>
-            <div className="h-56 w-full rounded-3xl bg-zinc-300 shadow">
+            <div className="group h-56 w-full rounded-3xl border-2 bg-zinc-300  shadow ">
               <InputFile />
             </div>
           </div>
