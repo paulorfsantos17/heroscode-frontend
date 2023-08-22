@@ -3,11 +3,15 @@ import { categories } from '@/app/utils/categories'
 import CategoriesItem from '@/app/components/CategoriesItem'
 import BannerSecondary from '@/app/components/BannerSecondary'
 import BannerPrimary from '@/app/components/BannerPrimary'
+import { fetchWrapper } from '@/app/utils/fetchWrapper'
 
-export default function DashBoard() {
+export default async function DashBoard() {
+  const response = await fetchWrapper('/events/main', { method: 'GET' })
+  const responseSecondary = response.slice(1)
+
   return (
     <div className="container mx-auto w-[90%]">
-      <BannerPrimary />
+      <BannerPrimary event={response[0]} />
 
       <div className="ml-2 p-2 text-blue">
         <p className="text-2xl font-medium">Eventos em Destaque</p>
@@ -17,7 +21,9 @@ export default function DashBoard() {
       </div>
 
       <div className=" grid grid-cols-3 gap-3">
-        <BannerSecondary />
+        {responseSecondary.map((event: any, index: number) => (
+          <BannerSecondary event={event} key={index} />
+        ))}
       </div>
 
       <div className="ml-2 p-2 text-blue ">

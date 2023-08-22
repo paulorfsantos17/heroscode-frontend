@@ -1,12 +1,36 @@
+'use client'
+
 import { Select } from '@/app/components/Form/Select/Index'
 import { categories } from '@/app/utils/categories'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from '@/app/components/Form/Input/Index'
 import { InputRange } from '@/app/components/Form/InputRange/Index'
 import Button from '@/app/components/Form/Button'
 import CardFilter from '@/app/components/CardFilter'
+import { useSearchParams } from 'next/navigation'
+import { fetchWrapper } from '@/app/utils/fetchWrapper'
+import { Event } from '@/app/interfaces/IEvent'
 
 export default function CreateEvent() {
+  const searchParams = useSearchParams()
+  const [events, setEvents] = useState<Event[]>([])
+
+  const getEvent = async (data: any) => {
+    const response = await fetchWrapper(
+      '/events/filter?' +
+        new URLSearchParams({
+          name: data.name,
+        }),
+      { method: 'GET' },
+    )
+
+    setEvents(response)
+  }
+  useEffect(() => {
+    if (searchParams.get('q')) {
+      getEvent({ name: searchParams.get('q') })
+    }
+  }, [searchParams.get('q')])
   return (
     <div className="container mt-20 px-8">
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -59,10 +83,9 @@ export default function CreateEvent() {
             Explore os resultados da sua busca por diversão! :)
           </p>
           <div className="mt-6 flex flex-col gap-5 p-5">
-            <CardFilter />
-            <CardFilter />
-            <CardFilter />
-            <CardFilter />
+            {events.map((event) => (
+              <CardFilter event={event} key={event._id} />
+            ))}
           </div>
         </div>
       </div>

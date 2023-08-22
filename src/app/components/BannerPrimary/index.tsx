@@ -3,24 +3,40 @@ import ItemBanner from '../ItemBanner'
 import Calendar from '@/app/assets/Calendar'
 import MapPin from '@/app/assets/MapPin'
 import Clock from '@/app/assets/Clock'
+import { dateFormated } from '@/app/utils/dateFormatted'
+import { Event } from '@/app/interfaces/IEvent'
+import { getImage } from '@/app/utils/getImage'
 
-export default function BannerPrimary() {
+interface IBannerPrimary {
+  event: Event
+}
+
+export default function BannerPrimary({ event }: IBannerPrimary) {
+  const date = new Date(event.date)
+  const image = getImage(event.banner)
+
   return (
     <div className="rounded p-5">
-      <div className=" relative h-72 rounded-3xl bg-black bg-opacity-25 shadow">
+      <div
+        className="relative h-[280px] w-full scale-105 rounded-3xl  bg-cover shadow"
+        style={{ backgroundImage: `url(${image})` }}
+      >
         <div className="absolute bottom-0 p-5 text-white">
-          <h3 className="pb-4 text-5xl font-bold">Jorge e Matheus</h3>
+          <h3 className="pb-4 text-5xl font-bold">{event.title}</h3>
           <div className="flex">
             <div className="mr-4 flex gap-3">
               <ItemBanner
                 icon={<Calendar className="h-6 w-6" />}
-                title="08/07/2023"
+                title={dateFormated(date)}
               />
               <ItemBanner
                 icon={<MapPin className="h-6 w-6" />}
-                title="Mineirão - Belo Horizonte"
+                title={event.formattedAddress}
               />
-              <ItemBanner icon={<Clock className="h-6 w-6" />} title="14h" />
+              <ItemBanner
+                icon={<Clock className="h-6 w-6" />}
+                title={date.getHours() + 'h'}
+              />
             </div>
           </div>
         </div>
