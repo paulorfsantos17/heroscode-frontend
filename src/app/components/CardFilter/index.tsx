@@ -7,6 +7,7 @@ import Button from '../Form/Button'
 import { Event } from '@/app/interfaces/IEvent'
 import { dateFormated } from '@/app/utils/dateFormatted'
 import { getImage } from '@/app/utils/getImage'
+import Link from 'next/link'
 
 interface ICardFilter {
   event: Event
@@ -47,7 +48,9 @@ export default function CardFilter({ event }: ICardFilter) {
           {event.description}
         </p>
         <div className="w-4/3">
-          <Button title="Ver Detalhes do Evento" />
+          <Link href={`/event-details/${event._id}`}>
+            <Button title="Ver Detalhes do Evento" />
+          </Link>
         </div>
       </div>
     </div>

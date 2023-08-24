@@ -10,10 +10,23 @@ import CardFilter from '@/app/components/CardFilter'
 import { useSearchParams } from 'next/navigation'
 import { fetchWrapper } from '@/app/utils/fetchWrapper'
 import { Event } from '@/app/interfaces/IEvent'
+import InputAutoComplete from '@/app/components/Form/InputAutocomplete'
+import { useForm } from 'react-hook-form'
+
+interface IFormFilter {
+  categories: string
+  latitude: string
+  longitude: string
+  name: string
+  date: string
+  price: string
+  radius: string
+}
 
 export default function CreateEvent() {
   const searchParams = useSearchParams()
   const [events, setEvents] = useState<Event[]>([])
+  const { register, handleSubmit, setValue } = useForm<IFormFilter>()
 
   const getEvent = async (data: any) => {
     const response = await fetchWrapper(
@@ -30,7 +43,29 @@ export default function CreateEvent() {
     if (searchParams.get('q')) {
       getEvent({ name: searchParams.get('q') })
     }
-  }, [searchParams.get('q')])
+  }, [searchParams])
+
+  const onSelect = (address: any) => {
+    setValue('latitude', address.lat)
+    setValue('longitude', address.lng)
+  }
+
+  const onSubmit = async (data: IFormFilter) => {
+    const response = await fetchWrapper(
+      '/events/filter?' +
+        new URLSearchParams({
+          name: data.name,
+          categories: data.categories,
+          price: data.price,
+          date: data.date,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          radius: data.radius,
+        }),
+      { method: 'GET' },
+    )
+  }
+
   return (
     <div className="container mt-20 px-8">
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -39,29 +74,27 @@ export default function CreateEvent() {
           <p className="mb-4 text-base font-light">
             Busque o evento que é a sua cara de maneira mais detalhada!
           </p>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               title="Nome"
               placeholder="Insira o nome do seu evento"
               type="text"
+              {...register('name')}
             />
-            <Input
-              title="Localização"
-              placeholder="Insira o endereço do seu evento"
-              type="text"
-            />
-            <Input title="Cupom" placeholder="Insira o código" type="text" />
+            <InputAutoComplete onSelect={onSelect} />
 
             <Input
               title="Data"
               placeholder="dd/mm/aaaa"
               type="date"
               postionText="center"
+              {...register('date')}
             />
 
             <Select
               title="Tipo de Evento"
               placeholder="Selecione uma modalide de evento"
+              {...register('categories')}
             >
               {categories.map((category) => (
                 <option value={category.name} key={category.name}>
@@ -69,8 +102,8 @@ export default function CreateEvent() {
                 </option>
               ))}
             </Select>
-            <InputRange title="Distância" />
-            <InputRange title="Valor" />
+            <InputRange title="Distância" {...register('radius')} />
+            <InputRange title="Valor" {...register('price')} />
             <div className="m-auto flex  w-2/3  grid-cols-2 flex-col gap-7 md:grid">
               <Button typeButton="secondary" title="Limpar" />
               <Button title="Buscar" />
